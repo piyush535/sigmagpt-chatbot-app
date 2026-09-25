@@ -1,0 +1,741 @@
+.sidebar {
+    background-color: var(--bg-sidebar);
+    color: var(--text-secondary);
+    border-right: 1px solid var(--border-subtle);
+    height: 100vh;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                min-width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                max-width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.2s ease,
+                transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 100;
+}
+
+.sidebar.collapsed {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    overflow: hidden;
+}
+
+.sidebarTopBar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 10px 0;
+}
+
+.newChatBtn {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background-color: transparent;
+    border: solid 0.5px var(--border-btn);
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    margin: 0;
+}
+
+.sidebarCloseBtn {
+    background: transparent;
+    border: 1px solid var(--border-btn);
+    color: var(--text-muted);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.sidebarCloseBtn:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+}
+
+.newChatLeft {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.newChatLeft span {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.logo {
+    height: 25px;
+    width: 25px;
+    background-color: white;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.newChatBtn:hover {
+    background-color: var(--bg-hover);
+}
+
+.historyContainer {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.history {
+    margin: 10px;
+    padding: 0 2px;
+}
+
+.sidebarSearch {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.searchInputWrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border: 1px solid var(--border-btn);
+    border-radius: 8px;
+    color: var(--text-muted);
+    position: relative;
+}
+
+.searchInputWrap input,
+.sidebarSearch select {
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text-primary);
+    font: inherit;
+}
+
+.searchInputWrap input {
+    width: 100%;
+    padding-right: 34px;
+    outline: 0;
+}
+
+.searchClearBtn {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+    transform: translateY(-50%);
+}
+
+.searchClearBtn:hover {
+    color: var(--text-muted);
+}
+
+.sidebarSearch select {
+    width: 100%;
+    padding: 7px 8px;
+    padding-right: 36px;
+    border: 1px solid var(--border-btn);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    outline: 0;
+    appearance: none;
+    cursor: pointer;
+}
+
+.categorySelectWrap {
+    position: relative;
+}
+
+.categorySelectWrap > i {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    color: var(--text-muted);
+    font-size: 11px;
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+.sidebarSearch option {
+    background: var(--bg-sidebar);
+    color: var(--text-primary);
+}
+
+.threadCategory {
+    margin-bottom: 12px;
+}
+
+.categoryHeading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    margin: 0 0 3px;
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.categoryHeading:hover {
+    color: var(--text-primary);
+}
+
+.categoryHeading i {
+    font-size: 9px;
+}
+
+.categoryThreads {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.categoryThreads li {
+    list-style-type: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    margin-bottom: 0.3rem;
+    font-size: 14px;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.15s;
+}
+
+.threadTitle {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 20px;
+    color: var(--text-primary);
+}
+
+.threadActions {
+    flex: 0 0 auto;
+    position: relative;
+}
+
+.threadMenuBtn {
+    border: 0;
+    padding: 4px 6px;
+    margin: 0;
+    background: transparent;
+    color: var(--text-muted);
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.categoryThreads li:hover .threadMenuBtn,
+.categoryThreads li:focus-within .threadMenuBtn,
+.threadMenuBtn[aria-expanded="true"] {
+    opacity: 0.8;
+}
+
+.threadMenuBtn:hover {
+    opacity: 1;
+    color: var(--text-primary);
+}
+
+.threadMenu {
+    position: absolute;
+    z-index: 10;
+    top: 28px;
+    right: 0;
+    min-width: 160px;
+    padding: 4px;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-btn);
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.threadMenu button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 9px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 12px;
+    line-height: 1.2;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.threadMenu button i {
+    width: 14px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.threadMenu button:hover,
+.threadMenu button:focus-visible {
+    background: var(--bg-hover);
+    outline: none;
+}
+
+.threadMenu button:first-child:hover,
+.threadMenu button:first-child:focus-visible {
+    color: #f87171;
+}
+
+.threadMenu button:first-child:hover i,
+.threadMenu button:first-child:focus-visible i {
+    color: #f87171;
+}
+
+.categoryThreads li:hover {
+    background-color: var(--bg-hover);
+}
+
+.categoryThreads li:hover .threadTitle {
+    color: var(--text-primary);
+}
+
+.noThreadsNote {
+    margin: 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 20px 10px;
+    cursor: default !important;
+}
+
+.noThreadsNote:hover {
+    background-color: transparent !important;
+}
+
+.highlighted {
+    background-color: var(--bg-hover) !important;
+}
+
+.categoryModalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    animation: modalOverlayFade 0.15s ease-out;
+}
+
+.categoryModalBox {
+    width: min(100%, 520px);
+    max-height: min(80vh, 620px);
+    overflow: hidden;
+    padding: 22px;
+    background: var(--bg-sidebar);
+    border: 1px solid var(--border-btn);
+    border-radius: 14px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    animation: modalBoxScale 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.categoryModalHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.categoryModalTitle {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.15rem;
+}
+
+.categoryModalDescription {
+    margin: 5px 0 0;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.categoryModalCloseBtn {
+    border: 0;
+    padding: 4px 6px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.categoryModalCloseBtn:hover {
+    color: var(--text-primary);
+}
+
+.categoryOptions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    max-height: 58vh;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.categoryOption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 9px 11px;
+    border: 1px solid var(--border-btn);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-primary);
+    user-select: none;
+}
+
+.categoryOptionSelect {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.categoryOption:hover:has(.categoryOptionSelect:not(:disabled)) {
+    background: var(--bg-hover);
+    border-color: var(--text-muted);
+    cursor: pointer;
+}
+
+.categoryOption.selected {
+    border-color: var(--text-muted);
+    background: var(--bg-hover);
+    cursor: default;
+}
+
+.categoryOption.selected .categoryOptionSelect i {
+    color: #16a34a;
+}
+
+.customCategoryOption {
+    padding-right: 6px;
+}
+
+.deleteCategoryBtn {
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.deleteCategoryBtn:hover,
+.deleteCategoryBtn:focus-visible {
+    background: rgba(248, 113, 113, 0.12);
+    color: #f87171;
+    outline: none;
+}
+
+.createCategoryOption {
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.categoryNameInput {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid var(--border-btn);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font: inherit;
+    outline: none;
+}
+
+.categoryNameInput:focus {
+    border-color: var(--text-muted);
+}
+
+.createCategorySubmitBtn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--text-primary);
+    color: var(--bg-sidebar);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.createCategorySubmitBtn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.guestHistoryPrompt {
+    margin: 20px 14px;
+    padding: 20px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.guestPromptIcon {
+    font-size: 24px;
+    color: #60a5fa;
+    margin-bottom: 4px;
+}
+
+.guestHistoryPrompt h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #f3f4f6;
+}
+
+.guestHistoryPrompt p {
+    margin: 0 0 10px;
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: #9ca3af;
+}
+
+.guestAuthBtn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.15s;
+    width: 100%;
+    justify-content: center;
+    margin: 0;
+}
+
+.guestAuthBtn:hover {
+    background: #3b82f6;
+    transform: translateY(-1px);
+}
+
+.sign {
+    padding: 10px;
+    margin: 10px;
+    font-size: 14px;
+    text-align: center;
+    border-top: solid 0.25px rgba(255, 255, 255, 0.2);
+}
+
+/* Delete Confirmation Modal */
+.deleteModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: modalOverlayFade 0.15s ease-out;
+}
+
+.deleteModalBox {
+    background: #232323;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 22px 24px;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
+    animation: modalBoxScale 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+}
+
+@keyframes modalOverlayFade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalBoxScale {
+    from {
+        opacity: 0;
+        transform: scale(0.94) translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.deleteModalHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.deleteModalIcon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.deleteModalTitle {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f3f4f6;
+}
+
+.deleteModalMessage {
+    margin: 0 0 14px 0;
+    font-size: 0.92rem;
+    color: #d1d5db;
+    line-height: 1.5;
+}
+
+.deleteModalThreadPreview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    color: #9ca3af;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.deleteModalThreadPreview span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #e5e7eb;
+}
+
+.deleteModalActions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.deleteModalCancelBtn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #e5e7eb;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+
+.deleteModalCancelBtn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.deleteModalConfirmBtn {
+    background: #dc2626;
+    border: none;
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 0.86rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+
+.deleteModalConfirmBtn:hover {
+    background: #ef4444;
+    box-shadow: 0 2px 10px rgba(239, 68, 68, 0.35);
+}

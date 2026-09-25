@@ -1,0 +1,94 @@
+.chats {
+    width: 100%;
+    max-width: 700px;
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+    padding: 1rem 0;
+    box-sizing: border-box;
+}
+
+.userDiv {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.9rem;
+}
+
+.gptDiv {
+    width: 100%;
+    text-align: left;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.userMessage {
+    background-color: var(--bg-user-msg);
+    color: var(--text-primary);
+    padding: 10px 20px;
+    border-radius: 14px;
+    margin-left: 15rem;
+    max-width: 500px;
+    width: fit-content;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.hljs {
+    border-radius: 14px !important;
+}
+
+.gptDiv table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    display: block;
+}
+
+.gptDiv th,
+.gptDiv td {
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    padding: 0.55rem 0.7rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+.gptDiv th {
+    background: rgba(148, 163, 184, 0.12);
+}
+
+.gptDiv p {
+    margin: 0.5rem 0;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+.mermaid-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+    margin: 15px 0;
+    box-sizing: border-box;
+}
+
+.mermaid-container svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.mermaid-error {
+    width: 100%;
+    overflow-x: auto;
+    white-space: pre;
+    padding: 15px;
+    box-sizing: border-box;
+}

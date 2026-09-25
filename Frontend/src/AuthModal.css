@@ -1,0 +1,254 @@
+.authModalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.authModalCard {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 420px;
+    padding: 2rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px) scale(0.96);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.authCloseBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    margin: 0;
+}
+
+.authCloseBtn:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+}
+
+.authHeader {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.authHeader .authLogo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    padding: 2px;
+    margin: 0 auto 0.75rem;
+    display: block;
+    object-fit: cover;
+}
+
+.authHeader h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.authHeader p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+
+.authTabs {
+    display: flex;
+    background: var(--bg-input);
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 1.5rem;
+}
+
+.authTab {
+    flex: 1;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    transition: all 0.2s;
+}
+
+.authTab.active {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+}
+
+.authErrorBanner {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.authForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 0.35rem;
+}
+
+.formGroup label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.authInputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.authInputWrapper input {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    box-shadow: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.authInputWrapper input:focus {
+    border-color: #3b82f6;
+    background: var(--bg-input-focus);
+    outline: none;
+}
+
+.passwordToggleBtn {
+    position: absolute;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.passwordToggleBtn:hover {
+    color: var(--text-primary);
+    background: transparent;
+}
+
+.authSubmitBtn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    font-size: 0.98rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.authSubmitBtn:hover {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+}
+
+.authSubmitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.authFooterSwitch {
+    margin-top: 1.25rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.authFooterSwitch button {
+    background: transparent;
+    border: none;
+    color: #60a5fa;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 0;
+    margin: 0 0 0 4px;
+    display: inline;
+}
+
+.authFooterSwitch button:hover {
+    text-decoration: underline;
+    background: transparent;
+}

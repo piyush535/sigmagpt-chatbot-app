@@ -1,0 +1,618 @@
+/* Settings Modal Overlay */
+.settingsModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1.5rem;
+    animation: settingsFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes settingsFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Settings Modal Card */
+.settingsModalCard {
+    background-color: #ffffff;
+    color: #111827;
+    width: 100%;
+    max-width: 660px;
+    min-height: 420px;
+    border-radius: 18px;
+    box-sizing: border-box;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: settingsSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .settingsModalCard {
+    background-color: #212121;
+    color: #f3f4f6;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes settingsSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Header */
+.settingsModalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+[data-theme="dark"] .settingsModalHeader {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.settingsModalTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    color: #111827;
+    letter-spacing: -0.2px;
+}
+
+[data-theme="dark"] .settingsModalTitle {
+    color: #f9fafb;
+}
+
+.settingsCloseBtn {
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    font-size: 1.15rem;
+    padding: 6px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.settingsCloseBtn:hover {
+    color: #111827;
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .settingsCloseBtn:hover {
+    color: #f3f4f6;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Body layout: Sidebar Nav + Main Content */
+.settingsModalBody {
+    display: flex;
+    flex: 1;
+    min-height: 350px;
+}
+
+.settingsNav {
+    width: 170px;
+    background-color: #f9fafb;
+    border-right: 1px solid #e5e7eb;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .settingsNav {
+    background-color: #1a1a1a;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.settingsNavItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    color: #4b5563;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    width: 100%;
+    font-family: inherit;
+}
+
+.settingsNavItem i {
+    font-size: 15px;
+    width: 18px;
+    text-align: center;
+}
+
+.settingsNavItem:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #111827;
+}
+
+[data-theme="dark"] .settingsNavItem {
+    color: #9ca3af;
+}
+
+[data-theme="dark"] .settingsNavItem:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: #f3f4f6;
+}
+
+.settingsNavItem.active {
+    background-color: #ffffff;
+    color: #111827;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .settingsNavItem.active {
+    background-color: #2b2b2b;
+    color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.settingsContent {
+    flex: 1;
+    padding: 24px 30px;
+    overflow-y: auto;
+}
+
+.sectionHeading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 4px;
+}
+
+[data-theme="dark"] .sectionHeading {
+    color: #f9fafb;
+}
+
+.sectionSubheading {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0 0 20px;
+}
+
+[data-theme="dark"] .sectionSubheading {
+    color: #9ca3af;
+}
+
+/* =========================================
+   Appearance Theme Options
+========================================= */
+.themeOptionsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.themeOptionCard {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1.5px solid #e5e7eb;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+[data-theme="dark"] .themeOptionCard {
+    background-color: #262626;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.themeOptionCard:hover {
+    border-color: #9ca3af;
+    transform: translateY(-1px);
+}
+
+[data-theme="dark"] .themeOptionCard:hover {
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+.themeOptionCard.selected {
+    border-color: #2563eb;
+    background-color: rgba(37, 99, 235, 0.03);
+    box-shadow: 0 0 0 1px #2563eb;
+}
+
+[data-theme="dark"] .themeOptionCard.selected {
+    border-color: #60a5fa;
+    background-color: rgba(96, 165, 250, 0.08);
+    box-shadow: 0 0 0 1px #60a5fa;
+}
+
+.themeIconBox {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #374151;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .themeIconBox {
+    background-color: #333333;
+    color: #d1d5db;
+}
+
+.themeOptionCard.selected .themeIconBox {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .themeOptionCard.selected .themeIconBox {
+    background-color: #3b82f6;
+    color: #ffffff;
+}
+
+.themeInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.themeTitle {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+[data-theme="dark"] .themeTitle {
+    color: #f3f4f6;
+}
+
+.themeDesc {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+[data-theme="dark"] .themeDesc {
+    color: #9ca3af;
+}
+
+.themeCheckIcon {
+    color: #2563eb;
+    font-size: 1rem;
+}
+
+[data-theme="dark"] .themeCheckIcon {
+    color: #60a5fa;
+}
+
+/* =========================================
+   Account Section matching Image 3
+========================================= */
+.accountSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.accountSection .sectionHeading {
+    margin-bottom: 18px;
+}
+
+.accountList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.accountRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    transition: background-color 0.15s;
+}
+
+.accountRow.clickable {
+    cursor: pointer;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-left: -6px;
+    margin-right: -6px;
+    border-radius: 8px;
+}
+
+.accountRow.clickable:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .accountRow.clickable:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.accountRowLabel {
+    font-size: 0.98rem;
+    color: #111827;
+    font-weight: 400;
+}
+
+[data-theme="dark"] .accountRowLabel {
+    color: #f3f4f6;
+}
+
+.accountRowValue {
+    font-size: 0.95rem;
+    color: #4b5563;
+    font-weight: 400;
+}
+
+[data-theme="dark"] .accountRowValue {
+    color: #9ca3af;
+}
+
+.accountRowActionValue {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chevronIcon {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.accountDivider {
+    height: 1px;
+    background-color: #e5e7eb;
+    width: 100%;
+}
+
+[data-theme="dark"] .accountDivider {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Delete account row matching Image 3 */
+.accountRow.deleteRow {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.deleteLabel {
+    color: #111827;
+    font-size: 0.98rem;
+}
+
+[data-theme="dark"] .deleteLabel {
+    color: #f3f4f6;
+}
+
+.accountDeleteBtn {
+    background: transparent;
+    border: 1.5px solid #ef4444;
+    color: #ef4444;
+    border-radius: 9999px;
+    padding: 7px 22px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    font-family: inherit;
+}
+
+.accountDeleteBtn:hover {
+    background-color: rgba(239, 68, 68, 0.08);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+}
+
+[data-theme="dark"] .accountDeleteBtn:hover {
+    background-color: rgba(239, 68, 68, 0.15);
+}
+
+.guestAccountNotice {
+    padding: 30px 10px;
+    text-align: center;
+    color: #4b5563;
+}
+
+[data-theme="dark"] .guestAccountNotice {
+    color: #9ca3af;
+}
+
+.guestAccountSubtext {
+    font-size: 0.85rem;
+    margin-top: 6px;
+    color: #9ca3af;
+}
+
+/* =========================================
+   Delete Account Confirmation Dialog
+========================================= */
+.deleteConfirmOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2100;
+    padding: 1.5rem;
+    animation: settingsFadeIn 0.15s ease-out;
+}
+
+.deleteConfirmBox {
+    background-color: #ffffff;
+    color: #111827;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    animation: settingsSlideUp 0.18s ease-out;
+}
+
+[data-theme="dark"] .deleteConfirmBox {
+    background-color: #262626;
+    color: #f3f4f6;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.deleteConfirmIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.deleteConfirmTitle {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+}
+
+.deleteConfirmMessage {
+    font-size: 0.9rem;
+    color: #4b5563;
+    line-height: 1.45;
+    margin: 0 0 20px;
+}
+
+[data-theme="dark"] .deleteConfirmMessage {
+    color: #9ca3af;
+}
+
+.deleteConfirmError {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+}
+
+.deleteConfirmActions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.deleteConfirmCancelBtn {
+    flex: 1;
+    background-color: #f3f4f6;
+    color: #374151;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    font-family: inherit;
+}
+
+.deleteConfirmCancelBtn:hover {
+    background-color: #e5e7eb;
+}
+
+[data-theme="dark"] .deleteConfirmCancelBtn {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #e5e7eb;
+}
+
+[data-theme="dark"] .deleteConfirmCancelBtn:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.deleteConfirmDangerBtn {
+    flex: 1.2;
+    background-color: #ef4444;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    font-family: inherit;
+}
+
+.deleteConfirmDangerBtn:hover:not(:disabled) {
+    background-color: #dc2626;
+}
+
+.deleteConfirmDangerBtn:disabled,
+.deleteConfirmCancelBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 600px) {
+    .settingsModalBody {
+        flex-direction: column;
+    }
+    .settingsNav {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        flex-direction: row;
+        padding: 8px 12px;
+    }
+    [data-theme="dark"] .settingsNav {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .settingsContent {
+        padding: 18px 16px;
+    }
+}
