@@ -15,6 +15,13 @@ app.use(cors({
   credentials: true
 }));
 
+app.get("/healthz", (req, res) => {
+    res.status(200).json({
+        status: "OK",
+        message: "SigmaGPT backend is running"
+    });
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api", chatRoutes);
 app.use("/api/category", categoryRoutes);
