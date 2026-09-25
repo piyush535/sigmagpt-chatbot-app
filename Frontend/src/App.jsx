@@ -7,6 +7,7 @@ import SettingsModal from './SettingsModal.jsx';
 import { MyContext } from './MyContext.jsx';
 import { useState, useEffect, useCallback } from 'react';
 import { v1 as uuidv1 } from 'uuid';
+import { API_URL } from './config';
 
 function App() {
   const [prompt, setPrompt] = useState("");
@@ -81,7 +82,7 @@ function App() {
 
   const logout = useCallback(async () => {
     try {
-      await fetch("http://localhost:8080/api/auth/logout", { method: "POST" });
+      await fetch(`${API_URL}/api/auth/logout`, { method: "POST" });
     } catch {
       // ignore network errors on logout
     }
@@ -99,7 +100,7 @@ function App() {
   // Delete account handler
   const deleteAccount = useCallback(async () => {
     if (!token) return;
-    const response = await fetch("http://localhost:8080/api/auth/account", {
+    const response = await fetch(`${API_URL}/api/auth/account`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`
@@ -135,7 +136,7 @@ function App() {
     const verifyUser = async () => {
       if (!token) return;
       try {
-        const response = await fetch("http://localhost:8080/api/auth/me", {
+        const response = await fetch(`${API_URL}/api/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

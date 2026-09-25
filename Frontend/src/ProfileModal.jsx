@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import "./ProfileModal.css";
 import { MyContext } from "./MyContext.jsx";
+import { API_URL } from "./config";
 
 function ProfileModal() {
     const {
@@ -84,7 +85,7 @@ function ProfileModal() {
         setError("");
 
         try {
-            const response = await fetch("http://localhost:8080/api/auth/profile", {
+            const response = await fetch(`${API_URL}/api/auth/profile`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

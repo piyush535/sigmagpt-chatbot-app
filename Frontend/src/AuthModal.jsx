@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useContext } from "react";
+import blackLogo from "./assets/blacklogo.png";
 import "./AuthModal.css";
 import { MyContext } from "./MyContext";
+import { API_URL } from "./config";
 
 function AuthModal() {
     const { isAuthModalOpen, closeAuthModal, authMode, setAuthMode, login } = useContext(MyContext);
@@ -51,8 +53,8 @@ function AuthModal() {
         setLoading(true);
 
         const endpoint = isLogin
-            ? "http://localhost:8080/api/auth/login"
-            : "http://localhost:8080/api/auth/register";
+            ? `${API_URL}/api/auth/login`
+            : `${API_URL}/api/auth/register`;
 
         const payload = isLogin
             ? { email, password }
@@ -101,7 +103,7 @@ function AuthModal() {
                 </button>
 
                 <div className="authHeader">
-                    <img src="src/assets/blacklogo.png" alt="SigmaGPT" className="authLogo" />
+                    <img src={blackLogo} alt="SigmaGPT" className="authLogo" />
                     <h2 id="auth-modal-title">{isLogin ? "Welcome Back" : "Create Your Account"}</h2>
                     <p>
                         {isLogin

@@ -1,8 +1,10 @@
 import "./Sidebar.css";
+import blackLogo from "./assets/blacklogo.png";
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "./MyContext.jsx";
 import { v1 as uuidv1 } from "uuid";
 import { ALLOWED_CATEGORIES as categories } from "../../Backend/constants/categories.js";
+import { API_URL } from "./config";
 
 function Sidebar() {
     const {
@@ -95,8 +97,8 @@ function Sidebar() {
             if (category !== "All") params.set("category", category);
 
             const endpoint = params.toString()
-                ? `http://localhost:8080/api/thread/search?${params}`
-                : "http://localhost:8080/api/thread";
+                ? `${API_URL}/api/thread/search?${params}`
+                : `${API_URL}/api/thread`;
             const response = await fetch(endpoint, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -136,7 +138,7 @@ function Sidebar() {
 
         const getCategories = async () => {
             try {
-                const response = await fetch("http://localhost:8080/api/category", {
+                const response = await fetch(`${API_URL}/api/category`, {
                     headers: { Authorization: `Bearer ${token}` },
                     credentials: "include"
                 });
@@ -175,7 +177,7 @@ function Sidebar() {
         }
 
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${newThreadId}`, {
+            const response = await fetch(`${API_URL}/api/thread/${newThreadId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -199,7 +201,7 @@ function Sidebar() {
         if (!token) return;
 
         try {
-            const response = await fetch(`http://localhost:8080/api/thread/${threadId}`, {
+            const response = await fetch(`${API_URL}/api/thread/${threadId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -229,8 +231,8 @@ function Sidebar() {
             const isCustomCategory = Boolean(categoryOption.id);
             const response = await fetch(
                 isCustomCategory
-                    ? `http://localhost:8080/api/category/${threadId}`
-                    : `http://localhost:8080/api/thread/${threadId}/category`,
+                    ? `${API_URL}/api/category/${threadId}`
+                    : `${API_URL}/api/thread/${threadId}/category`,
                 {
                 method: "PATCH",
                 headers: {
@@ -273,7 +275,7 @@ function Sidebar() {
         if (!name || !token) return;
 
         try {
-            const response = await fetch("http://localhost:8080/api/category", {
+            const response = await fetch(`${API_URL}/api/category`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -306,7 +308,7 @@ function Sidebar() {
         if (!token) return;
 
         try {
-            const response = await fetch(`http://localhost:8080/api/category/${categoryId}`, {
+            const response = await fetch(`${API_URL}/api/category/${categoryId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -337,7 +339,7 @@ function Sidebar() {
                 <div className="sidebarTopBar">
                     <button className="newChatBtn" onClick={createNewChat}>
                         <div className="newChatLeft">
-                            <img src="src/assets/blacklogo.png" alt="GPT Logo" className="logo" />
+                            <img src={blackLogo} alt="GPT Logo" className="logo" />
                             <span>New Chat</span>
                         </div>
                         <span>

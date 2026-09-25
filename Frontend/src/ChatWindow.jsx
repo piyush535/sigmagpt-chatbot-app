@@ -3,6 +3,7 @@ import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
 import { useContext, useState, useEffect, useRef } from "react";
 import { ScaleLoader } from "react-spinners";
+import { API_URL } from "./config";
 
 function ChatWindow() {
   const {
@@ -66,14 +67,14 @@ function ChatWindow() {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/chat", options);
+      const response = await fetch(`${API_URL}/api/chat`, options);
       const res = await response.json();
       setReply(res.reply);
 
       // If user is authenticated, refresh sidebar threads
       if (token) {
         try {
-          const threadRes = await fetch("http://localhost:8080/api/thread", {
+          const threadRes = await fetch(`${API_URL}/api/thread`, {
             headers: { Authorization: `Bearer ${token}` }
           });
           if (threadRes.ok) {
