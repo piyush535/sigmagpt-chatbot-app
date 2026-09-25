@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.json({ limit: "5mb" }));
 app.use(cors({
-  origin: true, // allows requests from frontend dev servers (http://localhost:5173, etc.)
+  origin: "https://sigmagpt-chatbot-app.vercel.app",
   credentials: true
 }));
 
