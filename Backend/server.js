@@ -25,7 +25,7 @@ const connectDB = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("Connected with Database!");
 
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
       console.log(`Server is running on port ${PORT}`);
     });
 
@@ -35,41 +35,3 @@ const connectDB = async () => {
 };
 
 connectDB();
-
-// app.post("/test", async (req, res) => {
-//   const options = {
-//     method: "POST",
-
-//     headers: {
-//       "Content-Type": "application/json",
-//       "x-goog-api-key": process.env.GEMINI_API_KEY,
-//     },
-
-//     body: JSON.stringify({
-//       contents: [
-//         {
-//           role: "user",
-//           parts: [
-//             {
-//               text: req.body.message,
-//             },
-//           ],
-//         },
-//       ],
-//     }),
-//   };
-
-//   try {
-//     const response = await fetch(
-//       "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent",
-//       options,
-//     );
-
-//     const data = await response.json();
-
-//     return data.candidates[0].content.parts[0].text;
-//   } catch (err) {
-//     console.log(err);
-//     throw err;
-//   }
-// });
