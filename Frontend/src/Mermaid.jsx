@@ -2,46 +2,78 @@ import { useEffect, useRef } from "react";
 import mermaid from "mermaid";
 
 mermaid.initialize({
-  startOnLoad: false,
-  theme: "dark",
-  securityLevel: "loose",
+    startOnLoad: false,
+    theme: "dark",
+    securityLevel: "loose",
 });
 
 function Mermaid({ chart }) {
-  const containerRef = useRef(null);
+    const containerRef = useRef(null);
 
-  useEffect(() => {
-    const renderChart = async () => {
-      if (!containerRef.current || !chart) return;
+    useEffect(() => {
+        let cancelled = false;
 
-      try {
-        const id =
-          "mermaid-" +
-          Date.now() +
-          "-" +
-          Math.random().toString(36).substring(2, 8);
+        const renderChart = async () => {
+            if (!containerRef.current || !chart?.trim()) {
+                return;
+            }
 
-        const { svg } = await mermaid.render(id, chart);
+            try {
+                const id =
+                    "mermaid-" +
+                    Date.now() +
+                    "-" +
+                    Math.random()
+                        .toString(36)
+                        .substring(2, 8);
 
-        containerRef.current.innerHTML = svg;
-      } catch (error) {
-        console.error("Mermaid rendering error:", error);
+                const { svg } = await mermaid.render(
+                    id,
+                    chart.trim()
+                );
 
-        containerRef.current.innerHTML = `
-          <pre class="mermaid-error">${chart}</pre>
-        `;
-      }
-    };
+                // Don't update an unmounted component
+                if (cancelled) return;
 
-    renderChart();
-  }, [chart]);
+                if (containerRef.current) {
+                    containerRef.current.innerHTML = svg;
+                }
+            } catch (error) {
+                if (cancelled) return;
 
-  return (
-    <div
-      ref={containerRef}
-      className="mermaid-container"
-    />
-  );
+                console.error(
+                    "Mermaid rendering error:",
+                    error
+                );
+
+                if (containerRef.current) {
+                    containerRef.current.innerHTML = `
+                        <div class="mermaid-error">
+                            Unable to render this flowchart.
+                        </div>
+                    `;
+                }
+            }
+        };
+
+        renderChart();
+
+        return () => {
+            cancelled = true;
+
+            if (containerRef.current) {
+                // eslint-disable-next-line react-hooks/exhaustive-deps
+                containerRef.current.innerHTML = "";
+            }
+        };
+    }, [chart]);
+
+    return (
+        <div
+            ref={containerRef}
+            className="mermaid-container"
+        />
+    );
 }
 
 export default Mermaid;

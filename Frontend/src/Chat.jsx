@@ -18,11 +18,13 @@ function MarkdownRenderer({ content }) {
 
           // Mermaid diagram
           if (match && match[1] === "mermaid") {
-            return (
-              <Mermaid
-                chart={String(children).replace(/\n$/, "")}
-              />
-            );
+            const chart = String(children).replace(/\n$/, "").trim();
+
+            if (!chart) {
+              return null;
+            }
+
+            return <Mermaid chart={chart} />;
           }
 
           // Normal code block
@@ -63,6 +65,7 @@ function Chat() {
 
       if (idx >= content.length) {
         clearInterval(interval);
+        setLatestReply(null);
       }
     }, 40);
 
@@ -74,7 +77,6 @@ function Chat() {
       {newChat && <h1>What can we explore today?</h1>}
 
       <div className="chats">
-
         {/* Previous messages */}
         {prevChats?.slice(0, -1).map((chat, idx) => (
           <div
@@ -105,7 +107,6 @@ function Chat() {
             )}
           </>
         )}
-
       </div>
     </>
   );
