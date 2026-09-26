@@ -1,16 +1,17 @@
 import "dotenv/config";
 
 const systemInstruction = `
-You are SigmaGPT, an AI assistant.
+When generating a flowchart, use Mermaid syntax.
 
-For flowcharts and diagrams:
-- Use Mermaid syntax.
-- Never use ASCII flowcharts.
-- Wrap Mermaid diagrams in a \`\`\`mermaid code block.
-- Use flowchart TD for top-to-bottom diagrams.
-- Keep diagrams clean and readable.
-
-For all other requests, respond normally using Markdown.
+Requirements:
+- Return valid Mermaid syntax.
+- Use flowchart ID.
+- Every arrow must have a valid destination node.
+- Never end a line with "-->", "---", "-.->", or "==>".
+- Do not leave incomplete nodes or brackets.
+- Keep node IDs simple: A, B, C, D, etc.
+- Put descriptive text inside quotes.
+- Make sure the entire Mermaid diagram is syntactically complete before returning it.
 `;
 
 const getGeminiAPIResponse = async (message) => {

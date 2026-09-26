@@ -7,7 +7,7 @@ import Mermaid from "./Mermaid";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
 
-function MarkdownRenderer({ content }) {
+function MarkdownRenderer({ content, renderMermaid = true }) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
@@ -22,6 +22,16 @@ function MarkdownRenderer({ content }) {
 
             if (!chart) {
               return null;
+            }
+
+            // Don't render Mermaid while the AI response
+            // is still being streamed/typed.
+            if (!renderMermaid) {
+              return (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              );
             }
 
             return <Mermaid chart={chart} />;
@@ -86,7 +96,7 @@ function Chat() {
             {chat.role === "user" ? (
               <p className="userMessage">{chat.content}</p>
             ) : (
-              <MarkdownRenderer content={chat.content} />
+              <MarkdownRenderer content={chat.content} renderMermaid={true}/>
             )}
           </div>
         ))}
@@ -98,11 +108,12 @@ function Chat() {
               <div className="gptDiv" key="non-typing">
                 <MarkdownRenderer
                   content={prevChats[prevChats.length - 1].content}
+                  renderMermaid={true}
                 />
               </div>
             ) : (
               <div className="gptDiv" key="typing">
-                <MarkdownRenderer content={latestReply} />
+                <MarkdownRenderer content={latestReply} renderMermaid={false} />
               </div>
             )}
           </>
