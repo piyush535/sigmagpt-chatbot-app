@@ -1,4 +1,4 @@
-import {getGeminiAPIResponse, classifyWithGemini} from './gemini.js';
+import {classifyWithGemini} from './gemini.js';
 import { ALLOWED_CATEGORIES } from '../constants/categories.js';
 
 function cleanGeminiJson(response) {

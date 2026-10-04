@@ -284,4 +284,4 @@ Important:
     }
 };
 
-export default {getGeminiAPIResponse, classifyWithGemini};
+export {getGeminiAPIResponse, classifyWithGemini};
