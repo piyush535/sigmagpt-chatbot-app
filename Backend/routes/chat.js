@@ -1,6 +1,6 @@
 import express from "express";
 import Thread from "../models/Thread.js";
-import getGeminiAPIResponse from "../utils/gemini.js";
+import { getGeminiAPIResponse } from "../utils/gemini.js";
 import { classifyConversation } from "../utils/classification.js";
 import { ALLOWED_CATEGORIES } from "../constants/categories.js";
 import { requireAuth, optionalAuth } from "../middleware/auth.js";
