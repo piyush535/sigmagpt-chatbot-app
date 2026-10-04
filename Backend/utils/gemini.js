@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { ALLOWED_CATEGORIES } from "../constants/categories";
+import { ALLOWED_CATEGORIES } from "../constants/categories.js";
 
 const getGeminiAPIResponse = async (message) => {
     const systemInstruction = `
