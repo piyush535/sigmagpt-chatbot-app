@@ -49,10 +49,6 @@ Follow these rules carefully:
                 ],
             },
 
-            generationConfig: {
-                responseMimeType: "application/json",
-            },
-
             contents: [
                 {
                     role: "user",
@@ -231,53 +227,7 @@ Important:
             );
         }
 
-        // Remove accidental Markdown code fences if Gemini
-        // returns them despite the instruction.
-        const cleanedText = rawText
-            .replace(/^```json\s*/i, "")
-            .replace(/^```\s*/i, "")
-            .replace(/\s*```$/i, "")
-            .trim();
-
-        let classification;
-
-        try {
-            classification = JSON.parse(cleanedText);
-        } catch (parseError) {
-            console.error(
-                "Invalid classification JSON from Gemini:",
-                rawText
-            );
-
-            throw new Error(
-                "Gemini returned invalid classification JSON"
-            );
-        }
-
-        // Basic validation
-        if (
-            !classification ||
-            typeof classification !== "object"
-        ) {
-            throw new Error(
-                "Invalid classification response"
-            );
-        }
-
-        if (
-            typeof classification.title !== "string" ||
-            typeof classification.primaryCategory !== "string" ||
-            !Array.isArray(classification.tags) ||
-            typeof classification.summary !== "string" ||
-            typeof classification.confidence !== "number"
-        ) {
-            throw new Error(
-                "Classification response has an invalid structure"
-            );
-        }
-
-        return classification;
-
+        return rawText;
     } catch (error) {
         console.error(
             "Gemini classification error:",

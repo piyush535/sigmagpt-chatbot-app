@@ -83,7 +83,8 @@ function ChatWindow() {
               setAllThreads(threadData.map(t => ({
                 threadId: t.threadId,
                 title: t.title,
-                primaryCategory: t.primaryCategory || "General"
+                primaryCategory: t.categoryId?.name || t.primaryCategory || "General",
+                categoryId: t.categoryId?._id || null
               })));
             }
           }
