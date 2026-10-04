@@ -49,6 +49,10 @@ Follow these rules carefully:
                 ],
             },
 
+            generationConfig: {
+                responseMimeType: "application/json",
+            },
+
             contents: [
                 {
                     role: "user",
