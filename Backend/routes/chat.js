@@ -150,77 +150,221 @@ router.delete("/thread/:threadId", requireAuth, async (req, res) => {
 router.post("/chat", optionalAuth, async (req, res) => {
   const { threadId, message } = req.body;
 
-  if (!threadId || !message) {
-    return res.status(400).json({ error: "Missing required fields" });
+  if (!threadId || !message || !message.trim()) {
+    return res.status(400).json({
+      error: "Missing required fields"
+    });
   }
 
   try {
+    // 1. Generate Gemini response
     const assistantReply = await getGeminiAPIResponse(message);
 
-    // If authenticated, persist the conversation under the user's account
-    if (req.user && threadId) {
-      let thread = await Thread.findOne({ threadId, userId: req.user.userId });
+    // 2. Guest user
+    if (!req.user) {
+      return res.status(200).json({
+        reply: assistantReply
+      });
+    }
 
-      if (!thread) {
-        // Create a new thread for this user
-        thread = new Thread({
-          userId: req.user.userId,
-          threadId,
-          title: message.length > 35 ? message.slice(0, 35) + "..." : message,
-          primaryCategory: "General",
-          tags: [],
-          summary: "",
-          classificationConfidence: null,
-          manuallyCategorized: false,
-          messages: [
-            { role: "user", content: message },
-            { role: "assistant", content: assistantReply },
-          ],
-        });
-      } else {
-        // Append both messages to the existing user thread
-        thread.messages.push({ role: "user", content: message });
-        thread.messages.push({ role: "assistant", content: assistantReply });
-        thread.updatedAt = new Date();
-      }
+    // 3. Find existing thread
+    let thread = await Thread.findOne({
+      threadId,
+      userId: req.user.userId
+    });
+    let isNewThread = false;
 
-      // Classify after the first user-assistant exchange.
-      // Later, classify again every 5 messages if needed.
-      if (shouldClassifyThread(thread) && !thread.manuallyCategorized) {
-        const recentMessages = thread.messages.slice(-10);
+    // 4. Create new thread if it doesn't exist
+    if (!thread) {
+      isNewThread = true;
 
-        const classification = await classifyConversation(recentMessages);
+      thread = new Thread({
+        userId: req.user.userId,
 
-        thread.title = classification.title;
-        thread.primaryCategory = classification.primaryCategory;
-        thread.tags = classification.tags;
-        thread.summary = classification.summary;
-        thread.classificationConfidence = classification.confidence;
-      }
+        threadId,
+
+        title:
+          message.length > 35
+            ? message.slice(0, 35) + "..."
+            : message,
+
+        // Temporary values.
+        // These will be replaced by Gemini classification below.
+        primaryCategory: "General",
+        tags: [],
+        summary: "",
+        classificationConfidence: null,
+
+        manuallyCategorized: false,
+
+        messages: [
+          {
+            role: "user",
+            content: message
+          },
+          {
+            role: "assistant",
+            content: assistantReply
+          }
+        ]
+      });
+
+    } else {
+
+      // 5. Existing thread
+
+      thread.messages.push({
+        role: "user",
+        content: message
+      });
+
+      thread.messages.push({
+        role: "assistant",
+        content: assistantReply
+      });
 
       thread.updatedAt = new Date();
-
-      await thread.save();
-
-      res.status(200).json({
-        reply: assistantReply,
-
-        thread: {
-          threadId: thread.threadId,
-          title: thread.title,
-          primaryCategory: thread.primaryCategory,
-          tags: thread.tags,
-          summary: thread.summary,
-          classificationConfidence: thread.classificationConfidence,
-        },
-      });
-    } else {
-      // Guest chats are not persisted, but still need a response for the client.
-      res.status(200).json({ reply: assistantReply });
     }
+
+    // 6. Decide whether classification is required
+
+    let shouldClassify = false;
+
+    if (!thread.manuallyCategorized) {
+
+      // ALWAYS classify a brand-new conversation
+      if (isNewThread) {
+        shouldClassify = true;
+      }
+
+      // Count user messages
+      const userMessageCount = thread.messages.filter(
+        (msg) => msg.role === "user"
+      ).length;
+
+      // Re-classify every 5 user messages
+      if (
+        !isNewThread &&
+        userMessageCount > 0 &&
+        userMessageCount % 5 === 0
+      ) {
+        shouldClassify = true;
+      }
+    }
+
+    // 7. Run AI classification
+    if (shouldClassify) {
+
+      try {
+
+        // Use the complete conversation.
+        // Limiting it to the last 10 messages keeps the
+        // classification request reasonably small.
+        const messagesForClassification =
+          thread.messages.slice(-10);
+
+        console.log(
+          "Classifying thread:",
+          thread.threadId
+        );
+
+        console.log(
+          "Messages sent for classification:",
+          messagesForClassification
+        );
+
+
+        const classification =
+          await classifyConversation(
+            messagesForClassification
+          );
+
+
+        console.log(
+          "Gemini classification result:",
+          classification
+        );
+
+
+        // 8. Save classification
+
+        if (classification.title) {
+          thread.title = classification.title;
+        }
+
+        if (classification.primaryCategory) {
+          thread.primaryCategory =
+            classification.primaryCategory;
+        }
+
+        if (Array.isArray(classification.tags)) {
+          thread.tags = classification.tags;
+        }
+
+        if (classification.summary) {
+          thread.summary =
+            classification.summary;
+        }
+
+        if (
+          typeof classification.confidence === "number"
+        ) {
+          thread.classificationConfidence =
+            classification.confidence;
+        }
+
+      } catch (classificationError) {
+
+        // Classification failure should NOT make the
+        // actual chat message fail.
+
+        console.error(
+          "Classification failed:",
+          classificationError
+        );
+
+        // Keep existing values.
+        // The chat itself will still be saved.
+      }
+    }
+
+
+    // 9. Update timestamp
+
+    thread.updatedAt = new Date();
+
+
+    // 10. Save thread
+
+    await thread.save();
+
+
+    // 11. Send response to frontend
+
+    return res.status(200).json({
+      reply: assistantReply,
+
+      thread: {
+        threadId: thread.threadId,
+        title: thread.title,
+        primaryCategory: thread.primaryCategory,
+        tags: thread.tags,
+        summary: thread.summary,
+        classificationConfidence:
+          thread.classificationConfidence
+      }
+    });
+
   } catch (error) {
-    console.error("Error in chat route:", error);
-    res.status(500).json({ error: "Failed to process chat message" });
+
+    console.error(
+      "Error in chat route:",
+      error
+    );
+
+    return res.status(500).json({
+      error: "Failed to process chat message"
+    });
   }
 });
 

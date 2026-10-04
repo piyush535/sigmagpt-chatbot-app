@@ -1,4 +1,4 @@
-import getGeminiAPIResponse from './gemini.js';
+import {getGeminiAPIResponse, classifyWithGemini} from './gemini.js';
 import { ALLOWED_CATEGORIES } from '../constants/categories.js';
 
 function cleanGeminiJson(response) {
@@ -92,7 +92,7 @@ ${conversationText}
 `;
 
     try {
-        const response = await getGeminiAPIResponse(prompt);
+        const response = await classifyWithGemini(prompt);
 
         const cleanedResponse = cleanGeminiJson(response);
 
